@@ -1,0 +1,258 @@
+/* Pasar Rempah: Duel Saudagar — tampilan meja kayu, kain tenun, dan kartu. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: #2a1a0e;
+  color: #f5e9c8;
+  overflow: hidden;
+}
+.hidden { display: none !important; }
+
+#app { width: 100vw; height: 100vh; position: relative; }
+
+/* ---------- tombol sudut ---------- */
+.corner-btns { position: fixed; top: 10px; right: 10px; z-index: 50; display: flex; gap: 8px; }
+.corner-btns button {
+  background: rgba(60, 35, 15, 0.9); color: #f5e9c8; border: 1px solid #c9a227;
+  border-radius: 8px; padding: 6px 10px; cursor: pointer; font-size: 13px;
+}
+.corner-btns button:hover { background: #6b4423; }
+
+/* ---------- tombol umum ---------- */
+.big-btn {
+  background: linear-gradient(#e8b923, #b8860b); color: #2a1a0e; border: 2px solid #7a5c1e;
+  border-radius: 12px; padding: 12px 28px; font-size: 20px; font-weight: bold;
+  font-family: inherit; cursor: pointer; box-shadow: 0 4px 0 #6b4c12;
+}
+.big-btn:hover { filter: brightness(1.1); }
+.big-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #6b4c12; }
+.big-btn:disabled { filter: grayscale(0.7) brightness(0.7); cursor: not-allowed; }
+.small-btn {
+  background: #5d3a1a; color: #f5e9c8; border: 1px solid #c9a227; border-radius: 8px;
+  padding: 8px 18px; font-size: 15px; font-family: inherit; cursor: pointer;
+}
+.small-btn:hover { background: #7a4a22; }
+
+/* ---------- layar judul ---------- */
+#title-screen {
+  height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background:
+    radial-gradient(ellipse at 50% 115%, #b3541e 0%, transparent 70%),
+    linear-gradient(#3a2412, #1e1208);
+  text-align: center; padding: 12px; position: relative;
+}
+.harbor { position: relative; }
+.sailboat { font-size: 64px; position: absolute; left: -90px; top: -8px; animation: bob 3s ease-in-out infinite; }
+.sacks { font-size: 30px; position: absolute; right: -80px; top: 30px; }
+@keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.game-title {
+  font-size: 72px; color: #ffd75e; text-shadow: 0 3px 0 #7a4a12, 0 6px 18px rgba(0,0,0,0.6);
+  letter-spacing: 2px; line-height: 1;
+}
+.game-subtitle { font-size: 34px; color: #ff9d5c; margin-top: 4px; letter-spacing: 6px; }
+.tagline { margin-top: 10px; font-size: 17px; color: #f5e9c8; max-width: 640px; }
+.sample-cards { display: flex; gap: 14px; margin: 18px 0 6px; justify-content: center; }
+.title-buttons { display: flex; gap: 14px; align-items: center; margin-top: 14px; }
+.big-btn.start { font-size: 24px; padding: 14px 38px; }
+.credit { margin-top: 16px; font-size: 13px; color: #cbb37e; font-style: italic; }
+.howto {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  background: #fdf3d0; color: #2a1a0e; border: 3px solid #c9a227; border-radius: 14px;
+  padding: 22px 26px; max-width: 520px; text-align: left; z-index: 20;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+}
+.howto h3 { margin-bottom: 10px; font-size: 22px; }
+.howto ol { padding-left: 22px; font-size: 15px; line-height: 1.55; }
+.howto li { margin-bottom: 6px; }
+.howto .small-btn { margin-top: 10px; }
+
+/* ---------- meja ---------- */
+#table-screen {
+  height: 100%; display: flex; flex-direction: column;
+  background:
+    radial-gradient(ellipse at 50% 40%, rgba(201, 162, 39, 0.14), transparent 60%),
+    repeating-linear-gradient(90deg, #4a2c14 0 46px, #3d2410 46px 92px),
+    #3d2410;
+  padding: 8px 16px 6px; position: relative;
+}
+#table-screen.shake { animation: shake 0.45s ease-in-out; }
+@keyframes shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-6px, 3px); } 40% { transform: translate(6px, -3px); }
+  60% { transform: translate(-4px, -2px); } 80% { transform: translate(4px, 2px); }
+}
+.table-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding-right: 216px; }
+.side-info { background: rgba(20, 10, 4, 0.55); border: 1px solid #8a6d3b; border-radius: 10px; padding: 6px 14px; min-width: 300px; }
+.side-name { font-size: 19px; font-weight: bold; color: #ffd75e; }
+.side-name .fav { font-size: 14px; color: #f5e9c8; font-weight: normal; vertical-align: middle; }
+.side-name .fav svg { vertical-align: -6px; }
+.side-stats { display: flex; align-items: center; gap: 14px; margin-top: 2px; }
+.coin-bag { font-size: 24px; }
+.life-num { font-size: 34px; font-weight: bold; color: #ffd75e; line-height: 1; }
+.shield-badge { font-size: 20px; color: #7ec8ff; font-weight: bold; }
+.shield-badge span { font-size: 24px; }
+.action-label { font-size: 13px; color: #d9c48a; margin-left: 2px; }
+.action-coins { font-size: 20px; letter-spacing: 2px; }
+.action-dot.on { color: #ffd75e; text-shadow: 0 0 8px #ffd75e; }
+.action-dot.off { color: #5a4632; }
+.deck-count { font-size: 13px; color: #cbb37e; font-weight: normal; }
+.turn-banner {
+  flex: 1; text-align: center; font-size: 19px; color: #ffe9a8; padding-top: 14px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.7);
+}
+
+/* tangan lawan */
+.ai-hand { display: flex; justify-content: center; gap: 6px; margin-top: 2px; min-height: 108px; }
+.ai-hand .card { transform: rotate(-2deg); }
+.ai-hand .card:nth-child(even) { transform: rotate(2deg); }
+
+/* tengah meja */
+.table-middle {
+  display: flex; justify-content: center; align-items: center; gap: 26px; margin: 2px 0;
+}
+.deck-pile { display: flex; align-items: center; gap: 8px; }
+.mini-card {
+  width: 52px; height: 72px; border-radius: 8px; background: linear-gradient(135deg, #8a2f23, #5d1f16);
+  border: 2px solid #c9a227; display: flex; align-items: center; justify-content: center;
+  font-size: 26px; color: #ffd75e;
+}
+.mini-card.discard { background: #3a2c1c; color: #8a7a5a; }
+.pile-label { font-size: 13px; color: #e8d5a8; line-height: 1.3; }
+.pile-label b { font-size: 18px; color: #ffd75e; }
+.combo-panel {
+  background: linear-gradient(#fdf3d0, #f0dc9a); color: #2a1a0e; border: 2px solid #c9a227;
+  border-radius: 12px; padding: 8px 18px; min-width: 420px; max-width: 520px; text-align: center;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+}
+.combo-title { font-size: 15px; font-weight: bold; letter-spacing: 1px; }
+.combo-body { font-size: 15px; margin-top: 2px; }
+
+.played-row { display: flex; justify-content: center; align-items: center; gap: 10px; min-height: 180px; }
+.last-played-label { font-size: 14px; color: #e8d5a8; font-style: italic; }
+
+/* tangan pemain */
+.player-hand {
+  display: flex; justify-content: center; align-items: flex-end; gap: 8px;
+  margin-top: auto; min-height: 188px; padding-bottom: 2px;
+}
+.player-hand .card { transform: rotate(-3deg); animation: dealIn 0.45s both; }
+.player-hand .card:nth-child(2) { transform: rotate(-1.5deg); animation-delay: 0.05s; }
+.player-hand .card:nth-child(3) { transform: rotate(0deg); animation-delay: 0.1s; }
+.player-hand .card:nth-child(4) { transform: rotate(1.5deg); animation-delay: 0.15s; }
+.player-hand .card:nth-child(5) { transform: rotate(3deg); animation-delay: 0.2s; }
+.player-hand .card:nth-child(6) { transform: rotate(4deg); animation-delay: 0.25s; }
+.player-hand .card:nth-child(7) { transform: rotate(5deg); animation-delay: 0.3s; }
+@keyframes dealIn {
+  from { transform: translateY(-260px) rotate(12deg); opacity: 0; }
+  to { opacity: 1; }
+}
+.player-hand .card:hover { transform: translateY(-14px) scale(1.06) rotate(0deg); z-index: 5; }
+
+.table-bottom { display: flex; align-items: center; gap: 16px; margin-top: 4px; }
+.table-bottom .big-btn { font-size: 17px; padding: 9px 22px; white-space: nowrap; }
+.game-log {
+  flex: 1; font-size: 13px; color: #d9c48a; line-height: 1.45; max-height: 56px;
+  overflow: hidden; background: rgba(20, 10, 4, 0.4); border-radius: 8px; padding: 5px 10px;
+}
+.game-log div:first-child { color: #ffe9a8; }
+
+/* ---------- kartu ---------- */
+.card {
+  --frame: #8b5a2b;
+  width: 126px; height: 176px; border-radius: 10px; position: relative;
+  background: linear-gradient(#fdf3d0, #f2dfa8); color: #2a1a0e;
+  border: 3px solid var(--frame); box-shadow: 0 3px 8px rgba(0,0,0,0.5);
+  cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease;
+  flex-shrink: 0; user-select: none;
+}
+.card.small { width: 96px; height: 134px; cursor: default; }
+.card.unaffordable { filter: grayscale(0.55) brightness(0.75); }
+.card.selected { transform: translateY(-16px) scale(1.08) !important; box-shadow: 0 0 0 3px #ffd75e, 0 8px 18px rgba(0,0,0,0.6); z-index: 6; }
+.card.combo-ready { animation: comboPulse 1s ease-in-out infinite; }
+@keyframes comboPulse {
+  0%, 100% { box-shadow: 0 0 0 2px #ffd75e, 0 3px 8px rgba(0,0,0,0.5); }
+  50% { box-shadow: 0 0 14px 4px #ffd75e, 0 3px 8px rgba(0,0,0,0.5); }
+}
+.card.combo-glow { animation: glowFlash 0.8s ease; }
+@keyframes glowFlash {
+  0% { box-shadow: 0 0 0 0 rgba(255, 215, 94, 0.9); }
+  40% { box-shadow: 0 0 26px 10px rgba(255, 215, 94, 0.9); }
+  100% { box-shadow: 0 3px 8px rgba(0,0,0,0.5); }
+}
+.card-cost {
+  position: absolute; top: 5px; left: 5px; width: 28px; height: 28px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffe98a, #c9a227); color: #2a1a0e;
+  font-size: 17px; font-weight: bold; display: flex; align-items: center; justify-content: center;
+  border: 2px solid #7a5c1e;
+}
+.card-symbol { margin-top: 26px; text-align: center; height: 58px; }
+.card.small .card-symbol { margin-top: 20px; height: 40px; }
+.special-icon { font-size: 44px; line-height: 1; }
+.card.small .special-icon { font-size: 34px; }
+.card-name { text-align: center; font-weight: bold; font-size: 14px; line-height: 1.15; margin-top: 4px; padding: 0 4px; }
+.card.small .card-name { font-size: 12px; }
+.card-text { text-align: center; font-size: 10px; color: #6b4c12; padding: 2px 6px; font-style: italic; line-height: 1.15; }
+.card.small .card-text { font-size: 9px; line-height: 1.15; padding: 1px 4px; }
+.card-stats {
+  position: absolute; bottom: 5px; left: 0; right: 0; display: flex; justify-content: space-between; padding: 0 8px;
+}
+.stat-atk { color: #b91f1f; font-weight: bold; font-size: 16px; }
+.stat-def { color: #1f5fb9; font-weight: bold; font-size: 16px; }
+.card-back {
+  background: linear-gradient(135deg, #8a2f23, #5d1f16); border-color: #c9a227;
+  width: 88px; height: 96px; cursor: default;
+}
+.card-back-inner {
+  color: #ffd75e; text-align: center; font-size: 12px; font-weight: bold;
+  padding-top: 30px; letter-spacing: 1px; line-height: 1.5;
+}
+
+/* ---------- layar akhir ---------- */
+#end-screen {
+  height: 100%; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(#3a2412, #1e1208); position: relative; overflow: hidden;
+}
+.end-inner { text-align: center; max-width: 760px; padding: 20px; position: relative; z-index: 2; }
+.end-inner.win { background: radial-gradient(ellipse at 50% 40%, rgba(255, 215, 94, 0.35), transparent 65%); border-radius: 20px; }
+.end-inner.lose { background: radial-gradient(ellipse at 50% 40%, rgba(90, 40, 90, 0.4), transparent 65%); border-radius: 20px; }
+.end-title {
+  font-size: 54px; color: #ffd75e; text-shadow: 0 3px 0 #7a4a12, 0 6px 18px rgba(0,0,0,0.6);
+  animation: titlePop 0.6s ease; line-height: 1.05;
+}
+.end-inner.lose .end-title { color: #c9a0d8; font-size: 40px; }
+@keyframes titlePop { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.end-sub { font-size: 17px; margin-top: 8px; }
+.end-stats { display: flex; justify-content: center; gap: 34px; margin: 18px 0 6px; }
+.end-stats .stat-big { display: block; font-size: 40px; font-weight: bold; color: #ffd75e; }
+.end-stats .stat-label { font-size: 13px; color: #d9c48a; }
+.finisher-label { font-size: 14px; font-style: italic; color: #e8d5a8; margin-top: 10px; }
+.end-cards { margin-top: 8px; }
+.end-inner .title-buttons { justify-content: center; }
+
+/* ---------- animasi mengambang ---------- */
+.float-text {
+  position: absolute; font-size: 26px; font-weight: bold; color: #ff5a4a;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8); pointer-events: none; z-index: 30;
+  animation: floatUp 1.3s ease-out forwards;
+}
+.float-text.warn { color: #ffd75e; font-size: 18px; left: 50%; top: 42%; }
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-46px); opacity: 0; }
+}
+.coin-rain {
+  position: absolute; top: -40px; color: #ffd75e; z-index: 1; pointer-events: none;
+  animation: coinFall 2.4s linear forwards; text-shadow: 0 0 8px rgba(255, 215, 94, 0.8);
+}
+@keyframes coinFall { to { transform: translateY(110vh) rotate(360deg); } }
+
+@media (max-width: 900px) {
+  .game-title { font-size: 48px; }
+  .table-top { padding-right: 0; }
+  .corner-btns { top: auto; bottom: 8px; }
+  .card { width: 96px; height: 138px; }
+  .side-info { min-width: 0; }
+  .combo-panel { min-width: 0; }
+  .end-title { font-size: 36px; }
+}
